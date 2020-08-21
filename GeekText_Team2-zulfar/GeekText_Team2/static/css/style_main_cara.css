@@ -1,0 +1,34 @@
+<style >
+  .carousel-item {
+  height: 75vh;
+  min-height: 350px;
+  width: 100%;
+  margin: auto;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.carousel-inner > .carousel-item > img {
+  margin: 0 auto;
+}
+
+/*#slider{
+  height:80px;
+  width:70%;
+  margin:auto;
+  overflow: hidden;
+  background: #CCC;
+}
+
+.slide{
+  height:80px;
+  float: left;
+  text-align:center;
+  border:1PX SOLID #000;
+  line-height:8em;
+  font-size:10px;
+}*/
+
+</style>

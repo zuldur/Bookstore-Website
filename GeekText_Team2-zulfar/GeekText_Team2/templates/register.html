@@ -1,0 +1,293 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- This snippet uses Font Awesome 5 Free as a dependency. You can download it at fontawesome.io! -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+
+<style media="screen">
+  :root {
+    --input-padding-x: 2.5rem;
+    --input-padding-y: .75rem;
+  }
+
+	@media (min-width: 768px) {
+    #card-container{
+        width:600px;
+    }
+}
+
+
+  #reg-nav {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+
+    color: #fff;
+    font-family: Arial;
+    font-size: 12px;
+    background-image: url('static/images/hd_library_login_background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  #card_row{
+    position: absolute;
+    width: 1900px;
+    left: 0;
+    right: 50px;
+  }
+
+  .card-signin {
+    border: 0;
+    top: 130px;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  .card-signin .card-title {
+    margin-bottom: 2rem;
+    font-weight: 300;
+    font-size: 1.5rem;
+  }
+
+  .card-signin .card-img-left {
+    width: 45%;
+    /* Link to your background image using in the property below! */
+    background: scroll center url("static/images/bookstore.jpg");
+    background-size: cover;
+  }
+
+  .card-signin .card-body {
+    padding: 2rem;
+  }
+
+  .form-signin {
+    width: 100%;
+  }
+
+  .form-signin .btn {
+    font-size: 80%;
+    border-radius: 5rem;
+    letter-spacing: .1rem;
+    font-weight: bold;
+    padding: 1rem;
+    transition: all 0.2s;
+  }
+
+  .form-label-group {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+
+  .form-label input {
+    height: 40px;
+    border-radius: 2rem;
+  }
+
+  .form-label-group>input,
+  .form-label-group>label {
+    padding: var(--input-padding-y) var(--input-padding-x);
+  }
+
+  .form-label-group>label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    margin-bottom: 0;
+    /* Override default `<label>` margin */
+    line-height: 1.5;
+    color: #495057;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    transition: all .1s ease-in-out;
+  }
+
+  .form-label-group input::-webkit-input-placeholder {
+    color: transparent;
+  }
+
+  .form-label-group input:-ms-input-placeholder {
+    color: transparent;
+  }
+
+  .form-label-group input::-ms-input-placeholder {
+    color: transparent;
+  }
+
+  .form-label-group input::-moz-placeholder {
+    color: transparent;
+  }
+
+  .form-label-group input::placeholder {
+    color: transparent;
+  }
+
+  .form-label-group input:not(:placeholder-shown) {
+    padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
+    padding-bottom: calc(var(--input-padding-y) / 3);
+  }
+
+  .form-label-group input:not(:placeholder-shown)~label {
+    padding-top: calc(var(--input-padding-y) / 3);
+    padding-bottom: calc(var(--input-padding-y) / 3);
+    font-size: 12px;
+    color: #777;
+  }
+
+	#reg-btn{
+		background-color: #1cb9a4;
+	}
+
+  .btn-google {
+    color: white;
+    background-color: #1cb9a4;
+  }
+
+
+</style>
+
+<body id="reg-nav">
+<div id="card-container" class="container-fluid">
+  <div id='card_row' class="row">
+    <div class="col-lg-10 col-xl-9 mx-auto">
+      <div class="card card-signin flex-row my-5">
+        <div class="card-img-left d-none d-md-flex">
+           <!-- Background image for card set in CSS! -->
+        </div>
+        <div class="card-body">
+          <h5 class="card-title text-center text-dark">Register</h5>
+          <form class="form-signin" method="POST">
+            {{ form.hidden_tag() }}
+            <div class="row justify-content-md-center">
+              <div class="col-md-5 form-group">
+                <div class="form-label">
+                  {{form.first_name( id="inputUserame", class="form-control", placeholder="First Name")}}
+                  {% for error in form.first_name.errors %}
+                  <li style='color:red;'>{{error}}</li>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="col-md-5 form-group">
+                <div class="form-label">
+                  {{form.last_name( id="inputUserame", class="form-control", placeholder="Last Name")}}
+                  {% for error in form.last_name.errors %}
+                  <li style='color:red;'>{{error}}</li>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+
+            <hr>
+
+            <div class="row justify-content-md-center">
+              <div class="col-md-5 form-group">
+                <div class="form-label">
+                  {{form.username( id="inputUserame", class="form-control", placeholder="Username")}}
+                  {% for error in form.username.errors %}
+                  <li style='color:red;'>{{error}}</li>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="col-md-5 form-group">
+                <div class="form-label">
+                  {{form.email( id="inputUserame", class="form-control", placeholder="Email")}}
+                  {% for error in form.email.errors %}
+                  <li style='color:red;'>{{error}}</li>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+
+            <hr>
+
+            <div class="row justify-content-md-center">
+              <div class="col-md-5 form-group">
+                <div class="form-label">
+                  {{form.password( id="inputUserame", class="form-control", placeholder="password")}}
+                  {% for error in form.password.errors %}
+                  <li style='color:red;'>{{error}}</li>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="col-md-5 form-group">
+                <div class="form-label">
+                  {{form.pass_confirm( id="inputUserame", class="form-control", placeholder="confirm password")}}
+                  {% for error in form.pass_confirm.errors %}
+                  <li style='color:red;'>{{error}}</li>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            <h5 class="card-title text-center text-dark">Address</h5>
+            <div class="row justify-content-md-center">
+              <div class="col-md-5 form-group">
+                <div class="form-label">
+                  {{form.address( id="inputUserame", class="form-control", placeholder="Address")}}
+                  {% for error in form.address.errors %}
+                  <li style='color:red;'>{{error}}</li>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="col-md-5 form-group">
+                <div class="form-label">
+                  {{form.city( id="inputUserame", class="form-control", placeholder="City")}}
+                  {% for error in form.city.errors %}
+                  <li style='color:red;'>{{error}}</li>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+
+            <hr>
+
+            <div class="row justify-content-md-center">
+              <div class="col-md-5 form-group">
+                <div class="form-label">
+                  {{form.state( id="inputUserame", class="form-control", placeholder="State")}}
+                  {% for error in form.state.errors %}
+                  <li style='color:red;'>{{error}}</li>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="col-md-5 form-group">
+                <div class="form-label">
+                  {{form.zip_code( id="inputUserame", class="form-control", placeholder="ZIP")}}
+                  {% for error in form.zip_code.errors %}
+                  <li style='color:red;'>{{error}}</li>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+
+            <div class="row justify-content-md-center">
+              <div class="col-md-6 form-group">
+                <div class="form-label">
+                  {{form.phone_num( id="inputUserame", class="form-control", placeholder="Phone")}}
+                  {% for error in form.phone_num.errors %}
+                  <li style='color:red;'>{{error}}</li>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+
+            <hr>
+
+						{{form.submit( class="btn btn-lg btn-secondary bg-dark btn-block text-uppercase")}}
+            <a class="d-block text-center mt-2 medium" href="{{url_for("users.login")}}">Sign In</a>
+            <hr class="my-4">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+{% endblock %}

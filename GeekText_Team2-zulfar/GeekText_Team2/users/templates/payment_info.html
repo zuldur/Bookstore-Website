@@ -1,0 +1,565 @@
+{% extends 'base.html' %} {% block content %}
+
+<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+  <link rel="stylesheet" href="https://pattern.kivan-works.com/fonts/kredit.css">
+
+<style>
+  #prof_img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .parallax {
+    /* The image used */
+    background-image: url("static/images/prof_background.jpg");
+
+    /* Set a specific height */
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+  }
+
+  #sidebar-container {
+    box-shadow: 2px 2px 5px #1cb9a4;
+    opacity: 0.9;
+    background: #fff;
+  }
+  .navbar .nav-item {
+    font-size: 1.4rem;
+    padding-right: 1.4rem;
+  }
+
+  #prof-card {
+    box-shadow: 4px 6px 5px #1cb9a4;
+    opacity: 0.9;
+    background: #fff;
+  }
+
+  .modal-header,
+  h4,
+  .close {
+    color: #1cb9a4 !important;
+    text-align: center;
+    font-size: 30px;
+  }
+  .modal-footer {
+    background-color: #f9f9f9;
+  }
+
+  #ad-card{
+    color: #343a40;
+  }
+
+  /*CREDIT CARD CSS*/
+
+  #cc-body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: -webkit-flex;
+  -webkit-align-items: center;
+  -webkit-justify-content: center;
+  flex-direction: column;
+  -webkit-flex-direction: column;
+}
+
+  #cc-card{
+width: 320px;
+height: 190px;
+  -webkit-perspective: 600px;
+  -moz-perspective: 600px;
+  perspective:600px;
+
+}
+
+.card__part{
+  box-shadow: 1px 1px #aaa3a3;
+    top: 0;
+  position: absolute;
+z-index: -1;
+  left: 0;
+  display: inline-block;
+    width: 320px;
+    height: 190px;
+    background-image: url('https://image.ibb.co/bVnMrc/g3095.png'), linear-gradient(to right bottom, #1cb9a4, #343a40, #343a40, #343a40, #1cb9a4); /*linear-gradient(to right bottom, #fd8369, #fc7870, #f96e78, #f56581, #ee5d8a)*/
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 8px;
+
+    -webkit-transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -moz-transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -ms-transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -o-transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+}
+
+.card__front{
+  padding: 18px;
+-webkit-transform: rotateY(0);
+-moz-transform: rotateY(0);
+}
+
+.card__back {
+  padding: 18px 0;
+-webkit-transform: rotateY(-180deg);
+-moz-transform: rotateY(-180deg);
+}
+
+.card__black-line {
+    margin-top: 5px;
+    height: 38px;
+    background-color: #303030;
+}
+
+.top__card__logo {
+    height: 54px;
+}
+
+.card__front-logo{
+      position: absolute;
+    top: 5px;
+    right: 18px;
+}
+.card__square {
+    border-radius: 5px;
+    height: 30px;
+}
+
+.card_numer {
+    display: block;
+    width: 100%;
+    word-spacing: 4px;
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.card__space-75 {
+    width: 75%;
+    float: left;
+}
+
+.card__space-25 {
+    width: 25%;
+    float: left;
+}
+
+.card__label {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 1px;
+}
+
+.card__info {
+    margin-bottom: 0;
+    margin-top: 5px;
+    font-size: 16px;
+    line-height: 18px;
+    color: #fff;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.card__back-content {
+    padding: 15px 15px 0;
+}
+.card__secret--last {
+    color: #303030;
+    text-align: right;
+    margin: 0;
+    font-size: 14px;
+}
+
+.card__secret {
+    padding: 5px 12px;
+    background-color: #fff;
+    position:relative;
+}
+
+.card__secret:before{
+  content:'';
+  position: absolute;
+top: -3px;
+left: -3px;
+height: calc(100% + 6px);
+width: calc(100% - 42px);
+border-radius: 4px;
+  background: repeating-linear-gradient(45deg, #ededed, #ededed 5px, #f9f9f9 5px, #f9f9f9 10px);
+}
+
+.card__back-logo {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+}
+
+.card__back-square {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+}
+
+.card:hover .card__front {
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+
+}
+
+.card:hover .card__back {
+    -webkit-transform: rotateY(0deg);
+    -moz-transform: rotateY(0deg);
+}
+/*END CREDIT CARD MAIN CSS*/
+
+/*ADDED CARDS CSS*/
+
+#added-card {
+  font: 16px/1.5 'Helvetica Neue', Helvetica, sans-serif;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 425px;
+  height: 270px;
+  text-align: left;
+  padding: 30px;
+  margin-bottom: 50px;
+  margin-left: 50px;
+  margin-right: 50px;
+  color: #fff;
+  border-radius: 20px;
+  box-sizing: border-box;
+  background: url(https://image.ibb.co/bVnMrc/g3095.png)
+  no-repeat 0 0 #141819;
+
+
+}
+.card__number {
+  font-size: 30px;
+  padding: 50px 0 15px;
+  text-align: center;
+}
+
+.card__expiry-date {
+  font-size: 14px;
+  padding-bottom: 20px;
+  text-align: center;
+}
+
+.card__owner {
+  text-align: left;
+}
+
+.card__logo {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  right: 20px;
+  bottom: 0px;
+}
+
+&__strip {
+  background: #000;
+  height: 50px;
+  margin-bottom: 30px;
+}
+
+&__signature {
+  float: left;
+  width: 65%;
+  height: 40px;
+  margin-left: 10px;
+  background: #999;
+}
+
+&__ccv {
+  float: left;
+  margin-top: 5px;
+  padding: 7px;
+  background: #fff;
+  color: #111;
+  line-height: 1;
+}
+
+.card--front {
+  font-size: 16px;
+  font-family: 'Source Code Pro';
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .6);
+}
+
+#card-del{
+}
+.modal-backdrop {
+z-index: -1;
+}
+/*END ADDED CARDS CSS*/
+
+</style>
+
+<div class="parallax">
+  <link rel="stylesheet" type="text/css" href="static/css/edit-payment-style.css" />
+  <div class="row" id="body-row">
+    <!-- Sidebar -->
+    <div
+      id="sidebar-container"
+      class="sidebar-expanded nav-light bg-dark d-none d-md-block col-2"
+    >
+      <!-- d-* hiddens the Sidebar in smaller devices. Its itens can be kept on the Navbar 'Menu' -->
+      <!-- Bootstrap List Group -->
+      <ul class="list-group sticky-top sticky-offset">
+        <!-- Separator with title -->
+        <li
+          class="list-group-item sidebar-separator-title text-light d-flex align-items-center menu-collapsed"
+        >
+          <small>{{ current_user.username }}</small>
+        </li>
+        <!-- /END Separator -->
+        <!-- Menu with submenu -->
+        <a
+          href="{{ url_for('users.account') }}"
+          class="bg-dark list-group-item list-group-item-action"
+        >
+          <div class="d-flex w-100 justify-content-start align-items-center">
+            <span class="fa fa-user fa-fw mr-3"></span>
+            <span class="menu-collapsed">Profile</span>
+          </div>
+        </a>
+        <!-- Submenu content -->
+        <a href="{{ url_for('wishlist_posts.create_wish') }}" class="bg-dark list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-start align-items-center">
+            <span class="fa fa-list fa-fw mr-3"></span>
+            <span class="menu-collapsed">Wishlist</span>
+          </div>
+        </a>
+        <!-- /END Separator -->
+        <a href="{{ url_for('cart.cart') }}" class="bg-dark list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-start align-items-center">
+            <span class="fa fa-shopping-cart fa-fw mr-3"></span>
+            <span class="menu-collapsed"
+              >Shopping Cart
+          </div>
+        </a>
+        <a
+          href="{{ url_for('users.shipping_info') }}"
+          class="bg-dark list-group-item list-group-item-action"
+        >
+          <div class="d-flex w-100 justify-content-start align-items-center">
+            <span class="fa fa-truck fa-fw mr-3"></span>
+            <span class="menu-collapsed">Shipping Info</span>
+          </div>
+        </a>
+        <a href="#" class="bg-dark list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-start align-items-center">
+            <span class="fa fa-credit-card fa-fw mr-3"></span>
+            <span class="menu-collapsed">Payment Info</span>
+          </div>
+        </a>
+        <a href="{{ url_for('core.index') }}" class="bg-dark list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-start align-items-center">
+            <span class="fa fa-thumbs-up fa-fw mr-3"></span>
+            <span class="menu-collapsed">Reviews</span>
+          </div>
+        </a>
+        <!-- Separator without title -->
+        <li class="list-group-item sidebar-separator menu-collapsed"></li>
+        <!-- /END Separator -->
+        <a href="#" class="bg-dark list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-start align-items-center">
+            <span class="fa fa-question fa-fw mr-3"></span>
+            <span class="menu-collapsed">Help</span>
+          </div>
+        </a>
+        <!-- Logo -->
+        <li
+          class="list-group-item logo-separator d-flex justify-content-center"
+        >
+          <img src="static/images/logo.png" width="30" height="30" />
+        </li>
+      </ul>
+      <!-- List Group END-->
+    </div>
+    <!-- Bootstrap row -->
+
+    <div id="ship-cont" class="container py-5">
+      <div class="col-lg-12">
+        <div id="prof-card" class="card" style="background-color: #343a40;">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <h4 align="center" class="text-light">
+                  {{ current_user.first_name }}'s Geek<span>Text</span> Wallet
+                </h4>
+                {% for message in get_flashed_messages() %}
+                <div class="alert alert-warning">
+                  <button type="button" class="close" data-dismiss="alert">
+                    &times;
+                  </button>
+                  {{ message }}
+                </div>
+                {% endfor %}
+                <hr style="border-top: solid white;" />
+              </div>
+            </div>
+            <div class="">
+              <h3 style="color:white;" align="center">An overview of your payment methods and settings with Geek<span>Text</span></h1>
+            </div>
+
+            <!--CREDIT CARD-->
+            <br>
+            <div id="cc-body" class="">
+              <div class="card" id="cc-card" style="background-color: #343a40">
+                <div class="card__front card__part">
+                  <img class="card__front-square card__square" src="https://image.ibb.co/cZeFjx/little_square.png">
+                  <img class="card__front-logo top__card__logo" src="static/images/logo.png">
+                  <p class="card_numer">**** **** **** 6258</p>
+                  <div class="card__space-75">
+                    <span class="card__label">Card holder</span>
+                    <p class="card__info">{{current_user.first_name}}</p>
+                  </div>
+                  <div class="card__space-25">
+                    <span class="card__label">Expires</span>
+                    <p class="card__info">10/25</p>
+                  </div>
+                </div>
+                <div class="card__back card__part">
+                  <div class="card__black-line"></div>
+                  <div class="card__back-content">
+                    <div class="card__secret">
+                      <p class="card__secret--last">420</p>
+                    </div>
+                    <img class="card__back-square card__square" src="https://image.ibb.co/cZeFjx/little_square.png">
+                    <img class="card__back-logo card__logo" src="static/images/logo.png">
+                  </div>
+                </div>
+              </div>
+
+            <!--CREDIT CARD -->
+
+            <hr style="border-top: solid white;" />
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card-columns">
+                    <!-- END CARD DISPLAYS-->
+                  </div>
+                </div>
+              </div>
+              <!--<button type="button" class="btn btn-success btn-lg">
+                Add Credit Card
+              </button>-->
+              <a href="{{url_for('users.add_card')}}" class="btn btn-success btn-block">Add Credit Card</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div  class="container py-5">
+      <div class="col-lg-12">
+        <div id="prof-card" class="card" style="background-color: #343a40;">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <hr style="border-top: solid white;" />
+              </div>
+            </div>
+            <div>
+              <h3 style="color:white;" align="center">Your Credit <span>Cards</span></h3>
+            </div>
+            <br>
+            <div class="row">
+              {% for card in cards %}
+              <div class="column">
+                    <div class="card card--front" id="added-card">
+                      <div class="card__number">{{card.credit_number}}</div>
+                      <div class="card__expiry-date">{{card.expiration_date}}</div>
+                      <div class="card__owner">{{card.cardholder}}</div>
+                      <img class="card__logo" src="static/images/logo_white.png"/>
+
+                    <!--<div class="card card--back">
+                      <div class="card__strip"></div>
+                      <div class="card__signature"></div>
+                      <div class="card__ccv">303</div>
+                    </div>-->
+                      <a href="" class="card-link" data-toggle='modal' data-target="#del_card">Delete</a>
+                  </div>
+                  <div class="modal fade " tabindex="-1" role="dialog" id="del_card">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Remove credit card</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p>Are you sure you want to delete this credit card?</p>
+                    </div>
+                    <div class="modal-footer">
+                      <form role="form" action="{{url_for('users.delete_card', card_id=card.id)}}" method="POST">
+                        <input class="btn btn-danger" type="submit" value="Delete">
+                      </form>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                  </div>
+                  </div>
+                  </div>
+              </div>
+              {% endfor %}
+              <!--CARD DISPLAYS-->
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL DIALOG-->
+
+    <div class="modal" tabindex="-1" role="dialog" id="myModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--DELETE HERE-->
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $("#myBtn").click(function() {
+        $("#myModal").modal();
+      });
+    });
+  </script>
+
+</div>
+  {% endblock %}

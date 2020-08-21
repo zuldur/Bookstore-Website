@@ -1,0 +1,113 @@
+{% extends "base.html" %} {% block content %}
+
+<div
+  class="container-fluid"
+  style="background: lightgray; background-image: url({{ url_for('static', filename='images/browse_background.jpg') }}); height: 50%; background-position: center; background-repeat: no-repeat;background-size: cover;"
+>
+  <!-- Page Content -->
+  <div class="container" style="background: white">
+    <div class="row">
+      <div class="col-lg-3">
+        <h2 class="my-4" style="text-align: center">Genres</h2>
+
+        <!--GENRE MENU-->
+        <div class="list-group" style="font-size: 20px">
+          <a href="{{ url_for('books.list') }}" class="list-group-item">All</a>
+          {% for genre in genres %}
+          <a
+            href="{{ url_for('books.genre', genre=genre) }}"
+            class="list-group-item"
+            >{{ genre }}</a
+          >
+          {% endfor %}
+        </div>
+
+        <!--SORT DROPDOWN-->
+        <!-- <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Sort By
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="{{ url_for('books.list', sort_by='price') }}">Price Low-High</a>
+            <a class="dropdown-item" href="{{ url_for('books.list', sort_by='author') }}">Author Name A-Z</a>
+            <a class="dropdown-item" href="{{ url_for('books.list', sort_by='title') }}">Book Title A-Z</a>
+            <a class="dropdown-item" href="{{ url_for('books.list', sort_by='rating') }}">Ratings Low-High</a>
+            </div>
+          </div> -->
+      </div>
+      <!-- /.col-lg-3 -->
+
+      <div class="col-lg-9">
+        <div
+          class="jumbotron"
+          style="background-image: url(../../../static/images/Top-Sellers.jpg); height: 350px;"
+        ></div>
+
+        <!--BOOK ITEMS-->
+
+        <div class="row">
+          {% for book in books.items %}
+
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="#"
+                ><img class="card-img-top" src="{{ book.image_url }}" alt=""
+              /></a>
+              <div class="card-body">
+                <h5 class="card-title" style="text-align: center">
+                  <a href="#">{{ book.title }}</a>
+                </h5>
+
+                <div class="text-muted" style="text-align: center">
+                  <a href="#" style="color: darkblue">By {{ book.author }}</a>
+                </div>
+
+                <p style="text-align: center">${{ book.price }}</p>
+                <div class="row">
+                  <div class="btn-group-vertical" style="margin: auto">
+                    <a href="/addToCart?ISBN={{book.ISBN}}" class="btn btn-primary">Add to Cart</a>
+                    <a href="#" class="btn btn-secondary">Add to Wishlist</a>
+                    <a href="/addToSaved?ISBN={{book.ISBN}}" class="btn btn-secondary">Save For Later</a>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">{{ book.rating }}&#9733;</small>
+              </div>
+            </div>
+          </div>
+
+          {% endfor %} {% if stop_pagination == False %} {% for page_num in
+          books.iter_pages(left_edge=1, right_edge=1, left_current=1,
+          right_current=2) %} {% if page_num %} {% if books.page == page_num %}
+          <a
+            class="btn btn-info mb-4"
+            href="{{ url_for('books.list', page=page_num) }}"
+            >{{ page_num }}</a
+          >
+          {% else %}
+          <a
+            class="btn btn-outline-info mb-4"
+            href="{{ url_for('books.list', page=page_num) }}"
+            >{{ page_num }}</a
+          >
+          {% endif %} {% else %} ... {% endif %} {% endfor %} {% endif %}
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.col-lg-9 -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark-fluid">
+    <div class="container">
+      <p class="m-0 text-center text-white">GeekText 2019</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+</div>
+
+{% endblock %}

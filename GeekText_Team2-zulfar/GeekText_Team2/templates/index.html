@@ -1,0 +1,95 @@
+
+
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<style media="screen">
+
+
+.jumbotron1 {
+  background-image: url("../../../static/images/reviewPage.jpg");
+  background-size: cover;
+  min-height: 500px;
+}
+
+</style>
+
+  <div class="jumbotron1">
+    <h1>Hello!</h1>
+    <p>This is a list of all your product reviews, you may delete or edit them. </p>
+
+
+  <div class="container">
+
+    {# Go through each blog post #}
+    {% for post in blog_posts.items %}
+            <!-- Remove this conditional, and the page will be populated with all reviews, use this for the book details page -->
+      {% if post.author.username == current_user.username and post.true_private != "true_private":  %} <!--This conditional allows the index to populate if the current_user is the same as the post's author'username -->
+            <div class="card" >
+            <div class="card-body">
+
+              {% for book in books %}
+              {% if post.book_isbn == book.ISBN %}
+                <!-- IMAGE COLUMN -->
+                            <div class="col-sm-1">
+                              <a href="/browse/{{book.ISBN}}">
+                                <img
+                                  src="{{ book.image_url }}"
+                                  class="w3-image"
+                                  width="200"
+                                  height="200"
+                                  alt="..."
+                                />
+                              </a>
+                            </div>
+
+              {% endif %}
+              {% endfor %}
+            <!-- <p class="card-text">{{ post.true_private }}finding the annonymous checkbox</p>
+           <h1> inside testing conditional</h1>
+            <p class="card-text">{{ blog_posts.user_id }} trying to find another username</p>
+            <p class="card-text">{{ post.author.username }} Using post.author.username ...</p>
+            <p class="card-text">{{ current_user }} is the current_user</p>
+            <p class="card-text">{{ current_user.id }} is the current_user using .id</p>
+            <p class="card-text">{{ current_user.username }} is the current_user using .username</p> -->
+            <h2><a class="card-title" href="  {{ url_for('blog_posts.blog_post', blog_post_id=post.id) }}">{{ post.title }}</a></h2>
+            <a href="{{ url_for('users.user_posts', username=post.author.username) }}">Written By: {{ post.author.username }}</a>
+            <p>Published on: {{ post.date.strftime('%Y-%m-%d') }}</p>
+            <p class="card-text">{{ post.text }}...</p>
+            <p class="card-text">{{ post.rating }} &#9733;</p>
+            <a href="{{ url_for('blog_posts.blog_post', blog_post_id=post.id) }}" class="btn btn-primary">Read consumer review</a>
+            </div>
+            </div>
+      {% elif post.true_private == "true_private": %}       <!-- The true_private flag was activated, so populate with no username -->
+              <div class="card" >
+              <div class="card-body">
+              <h2><a class="card-title" href="  {{ url_for('blog_posts.blog_post', blog_post_id=post.id) }}">{{ post.title }}</a></h2>
+              <a href="{{ url_for('users.user_posts', username=post.author.username) }}">Written By: annonymous </a>
+              <p>Published on: {{ post.date.strftime('%Y-%m-%d') }}</p>
+              <p class="card-text">{{ post.text[:100] }}...</p>
+              <p class="card-text">{{ post.rating }} &#9733;</p>
+              <a href="{{ url_for('blog_posts.blog_post', blog_post_id=post.id) }}" class="btn btn-primary">Read consumer review</a>
+              </div>
+              </div>
+      {% endif %}
+   {% endfor %}
+
+   <nav aria-label="Page navigation example">
+     <ul class="pagination justify-content-center">
+       {% for page_num in blog_posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+          {% if blog_posts.page == page_num %}
+          <li class="page-item disabled">
+            <a class="page-link" href="{{ url_for('core.index', page=page_num) }}">{{ page_num }}</a>
+          </li>
+          {% else %}
+            <li class="page-item"><a class="page-link" href="{{ url_for('core.index', page=page_num) }}">{{ page_num }}</a></li>
+          {% endif %}
+      {% endfor %}
+    </nav>
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends 'base.html' %} {% block content %}
+    <head>
+        <link rel="stylesheet" href="static/css/style.css" />
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    </head>
+
+
+<div class="container">
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+          <button type="button" class="close" data-dismiss="alert">
+            &times;
+          </button>
+          {{ message }}
+        </div>
+        {% endfor %}
+    <table id="cart" class="table table-hover table-condensed">
+        <thead>
+            <tr>
+                <th style="width:10%">Product</th>
+                <th style="width:40%"></th>
+                <th style="width:8%">Price</th>
+                <th style="width:9%">Quantity</th>
+                <th style="width:1%"></th>
+                <th style="width:22%" class="text-center">Subtotal</th>
+                <th style="width:10%"></th>
+                <th style="width:10%"></th>
+            </tr>
+        </thead>
+        {% for row in items %}
+        <tbody>
+            <tr>
+                <td data-th="Product">
+                    <div class="row">
+                        <div class="col-sm-2 hidden-xs"><img src="{{row.image_url}}" alt="..." class="img-responsive" style="width: 72px; height: 100px;" /></div>
+                        <div class="col-sm-10">
+                    <td data-th="">
+                        <h4 class="nomargin">{{row.title}}</h4>
+                    </td>
+                        </div>
+                    </div>
+                </td>
+                <td data-th="Price">${{row.price}}</td>
+                <td data-th="Quantity">
+                    {{row.quantity}}
+                </td>
+                <td data-th="Quantity">
+                    <a href="/addQuantity?ISBN={{row.ISBN}}" class="btn btn-info btn-sm py-0">+</a>
+                    <a href="/lowerQuantity?ISBN={{row.ISBN}}" class="btn btn-info btn-sm py-0">-</a>
+                </td>
+                <td data-th="Subtotal" class="text-center">{{row.price*row.quantity}}</td>
+                <td class="actions" data-th="">
+                    <a href="/removeFromCart?ISBN={{row.ISBN}}" class="btn btn-primary">Remove</a>
+                </td>
+                <td class="actions" data-th="Move to Cart">
+                    <a href="/moveToSaved?ISBN={{row.ISBN}}" class="btn btn-primary">Move to Saved</a>
+                </td>
+            </tr>
+        </tbody>
+        {% endfor %}
+        <tfoot>
+            <tr>
+                <td><a href="{{url_for('books.list')}}" class="btn btn-warning">Continue Shopping</a></td>
+                <td colspan="4" class="hidden-xs"></td>
+                <td class="hidden-xs text-center"><strong>Total ${{totalPrice}}</strong></td>
+                <td colspan="1" class="hidden-xs"></td>
+                <td><a href="{{ url_for('cart.confirmPayment')}}" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<div class="container">
+    <table id="cart" class="table table-hover table-condensed">
+        <thead>
+            <tr>
+                <th style="width:50%">Saved For Later</th>
+                <th style="width:40%"></th>
+                <th style="width:10%"></th>
+            </tr>
+        </thead>
+        {% for row in savedItems %}
+        <tbody>
+            <tr>
+                <td data-th="Saved For Later">
+                    <div class="row">
+                        <div class="col-sm-2 hidden-xs"><img src="{{row.image_url}}" alt="..." class="img-responsive" style="width: 72px; height: 100px;" /></div>
+                        <div class="col-sm-10">
+                            <h4 class="nomargin">{{row.title}}</h4>
+                        </div>
+                    </div>
+                </td>
+                <td></td>
+                <td class="actions" data-th="Move to Cart">
+                    <a href="/moveToCart?ISBN={{row.ISBN}}" class="btn btn-primary">Move to Cart</a>
+                </td>
+                <td class="actions" data-th="">
+                    <a href="/removeFromSaved?ISBN={{row.ISBN}}" class="btn btn-primary">Remove</a>
+                </td>
+            </tr>
+        </tbody>
+        {% endfor %}
+</div>  {% endblock %}
+

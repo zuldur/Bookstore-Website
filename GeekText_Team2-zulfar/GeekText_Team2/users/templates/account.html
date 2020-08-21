@@ -1,0 +1,515 @@
+{% extends 'base.html' %} {% block content %}
+<link
+  href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+  rel="stylesheet"
+  id="bootstrap-css"
+/>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<style media="screen">
+  .emp-profile {
+    padding: 3%;
+    margin-top: 8%;
+    margin-bottom: 3%;
+    margin-left: 7%;
+    border-radius: 0.5rem;
+    color: #fff;
+    background-color: #343a40;
+    box-shadow: 4px 6px 5px #1cb9a4;
+    opacity: 0.9;
+  }
+  .profile-img {
+    text-align: center;
+  }
+  .profile-img img {
+    width: 70%;
+    height: 200px;
+  }
+  .profile-img .file {
+    position: relative;
+    overflow: hidden;
+    margin-top: -20%;
+    width: 70%;
+    border: none;
+    border-radius: 0;
+    font-size: 15px;
+    background: #212529b8;
+  }
+  .profile-img .file input {
+    position: absolute;
+    opacity: 0;
+    right: 0;
+    top: 0;
+  }
+  .profile-head h5 {
+    color: #fff;
+  }
+  .profile-head h6 {
+    color: #fff;
+  }
+  .profile-edit-btn {
+    border: none;
+    border-radius: 1.5rem;
+    width: 70%;
+    padding: 2%;
+    font-weight: 600;
+    color: #6c757d;
+    cursor: pointer;
+  }
+  .proile-rating {
+    font-size: 12px;
+    color: #fff;
+    margin-top: 5%;
+  }
+  .proile-rating span {
+    color: #495057;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .profile-head .nav-tabs {
+    margin-bottom: 5%;
+  }
+  .profile-head .nav-tabs .nav-link {
+    font-weight: 600;
+    border: none;
+    color: #1cb9a4;
+  }
+  .profile-head .nav-tabs .nav-link.active {
+    border: none;
+    border-bottom: 2px solid #1cb9a4;
+  }
+  .profile-work {
+    padding: 14%;
+    margin-top: -15%;
+  }
+  .profile-work p {
+    font-size: 12px;
+    color: #1cb9a4;
+    font-weight: 600;
+    margin-top: 10%;
+  }
+  .profile-work a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .profile-work ul {
+    list-style: none;
+  }
+  .profile-tab label {
+    font-weight: 600;
+  }
+  .profile-tab p {
+    font-weight: 600;
+    color: #1cb9a4;
+  }
+  #prof_img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .parallax {
+    /* The image used */
+    background-image: url("static/images/prof_background.jpg");
+
+    /* Set a specific height */
+    min-height: 500px;
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  #prof_col {
+    position: absolute;
+    width: 850px;
+    left: 600px;
+    top: 130px;
+  }
+
+  #sidebar-container {
+    box-shadow: 2px 2px 5px #1cb9a4;
+    opacity: 0.9;
+    background: #fff;
+  }
+  .navbar .nav-item {
+    font-size: 1.4rem;
+    padding-right: 1.4rem;
+  }
+
+  #prof-card {
+    box-shadow: 4px 6px 5px #1cb9a4;
+    opacity: 0.9;
+    background: #fff;
+  }
+  .modal-backdrop {
+    z-index: -1;
+  }
+</style>
+
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="static/css/account-page-style.css"
+/>
+<div class="parallax">
+  <div class="row" id="body-row">
+    <div
+      id="sidebar-container"
+      class="sidebar-expanded nav-light bg-dark d-none d-md-block col-2"
+    >
+      <!-- d-* hiddens the Sidebar in smaller devices. Its itens can be kept on the Navbar 'Menu' -->
+      <!-- Bootstrap List Group -->
+      <ul class="list-group sticky-top sticky-offset">
+        <!-- Separator with title -->
+        <li
+          class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed"
+        >
+          <small>USER</small>
+        </li>
+        <!-- /END Separator -->
+        <!-- Menu with submenu -->
+        <a href="#" class="bg-dark list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-start align-items-center">
+            <span class="fa fa-user fa-fw mr-3"></span>
+            <span class="menu-collapsed">{{ current_user.username }}</span>
+          </div>
+        </a>
+        <!-- Separator with title -->
+        <li
+          class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed"
+        >
+          <small>PROFILE</small>
+        </li>
+
+        <a
+          href="{{ url_for('users.account') }}"
+          class="bg-dark list-group-item list-group-item-action"
+        >
+          <div class="d-flex w-100 justify-content-start align-items-center">
+            <span class="fa fa-user fa-fw mr-3"></span>
+            <span class="menu-collapsed">Profile</span>
+          </div>
+        </a>
+        <!-- Submenu content -->
+        <a
+          href="{{ url_for('wishlist_posts.create_wish') }}"
+          class="bg-dark list-group-item list-group-item-action"
+        >
+          <div class="d-flex w-100 justify-content-start align-items-center">
+            <span class="fa fa-list fa-fw mr-3"></span>
+            <span class="menu-collapsed">Wishlist</span>
+          </div>
+        </a>
+        <!-- /END Separator -->
+        <a
+          href="{{ url_for('cart.cart') }}"
+          class="bg-dark list-group-item list-group-item-action"
+        >
+          <div class="d-flex w-100 justify-content-start align-items-center">
+            <span class="fa fa-shopping-cart fa-fw mr-3"></span>
+            <span class="menu-collapsed"
+              >Shopping Cart
+
+          </div>
+        </a>
+        <a
+          href="{{ url_for('users.shipping_info') }}"
+          class="bg-dark list-group-item list-group-item-action"
+        >
+          <div class="d-flex w-100 justify-content-start align-items-center">
+            <span class="fa fa-truck fa-fw mr-3"></span>
+            <span class="menu-collapsed">Shipping Info</span>
+          </div>
+        </a>
+        <a
+          href="{{ url_for('users.payment_info') }}"
+          class="bg-dark list-group-item list-group-item-action"
+        >
+          <div class="d-flex w-100 justify-content-start align-items-center">
+            <span class="fa fa-credit-card fa-fw mr-3"></span>
+            <span class="menu-collapsed">Payment Info</span>
+          </div>
+        </a>
+        <a
+          href="{{ url_for('core.index') }}"
+          class="bg-dark list-group-item list-group-item-action"
+        >
+          <div class="d-flex w-100 justify-content-start align-items-center">
+            <span class="fa fa-thumbs-up fa-fw mr-3"></span>
+            <span class="menu-collapsed">Reviews</span>
+          </div>
+        </a>
+        <!-- Separator without title -->
+        <li class="list-group-item sidebar-separator menu-collapsed"></li>
+        <!-- /END Separator -->
+        <a href="#" class="bg-dark list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-start align-items-center">
+            <span class="fa fa-question fa-fw mr-3"></span>
+            <span class="menu-collapsed">Help</span>
+          </div>
+        </a>
+        <!-- Logo -->
+        <li
+          class="list-group-item logo-separator d-flex justify-content-center"
+        >
+          <img src="static/images/logo_white.png" width="50" height="50" />
+        </li>
+      </ul>
+      <!-- List Group END-->
+    </div>
+
+    <!--PROFILE INFORMATION -->
+    <div class="container emp-profile">
+      <form method="POST" action="" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="row">
+          <div class="col-md-4" style="margin-top: 0px;">
+            <div class="profile-img">
+              <img
+                src="{{ url_for('static', filename='profile_pics/' + current_user.profile_image) }}"
+                alt=""
+                width="150,"
+                height="200"
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="profile-head">
+              <h3>
+                {{ current_user.username }}
+              </h3>
+              <h6>Standard Geek<span>Text</span> member</h6>
+              <p class="proile-rating">Joined: {{ current_user.join_date }}</p>
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    id="home-tab"
+                    data-toggle="tab"
+                    href="#home"
+                    role="tab"
+                    aria-controls="home"
+                    aria-selected="true"
+                    >About</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <!--{{form.submit(class="profile-edit-btn", value="Edit Profile")}}-->
+            <button
+              type="button"
+              class="profile-edit-btn"
+              name="btnAddMore"
+              value="Edit Profile"
+              id="myBtn"
+              name="button"
+            >
+              Edit Profile
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="profile-work">
+              <img src="static/images/logo_white.png" class="py-5" alt="" />
+            </div>
+          </div>
+
+          <div class="col-md-8">
+            <div class="tab-content profile-tab" id="myTabContent">
+              <div
+                class="tab-pane fade show active"
+                id="home"
+                role="tabpanel"
+                aria-labelledby="home-tab"
+              >
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Username</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{ current_user.username }}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>First name</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{ current_user.first_name }}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Last name</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{ current_user.last_name }}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Email</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{ current_user.email }}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Phone</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{ current_user.address[0].phone_num }}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Main Address</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>{{ current_user.address[0].address }}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Account Type</label>
+                  </div>
+                  <div class="col-md-6">
+                    <p>Standard</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <a
+                      type="button"
+                      class="btn btn-success btn-lg"
+                      href="{{ url_for('users.change_password') }}"
+                    >
+                      Change Password
+                    </a>
+                  </div>
+                  <div class="col-md-6"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="row"></div>
+      {% for message in get_flashed_messages() %}
+      <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">
+          &times;
+        </button>
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<!--THIS IS MY MODAL-->
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="padding:35px 50px;">
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+        <h4><span class="glyphicon glyphicon"></span>Edit Profile</h4>
+      </div>
+      <div class="modal-body" style="padding:40px 50px;">
+        <form method="POST" action="" enctype="multipart/form-data">
+          {{ form.hidden_tag() }}
+          <div class="form-group">
+            <label
+              ><span class="glyphicon glyphicon-user"></span> Username</label
+            >
+            {{form.username( id="inputUserame", class="form-control", placeholder=current_user.username)}}
+            {% for error in form.username.errors %}
+            <li style="color:red;">{{ error }}</li>
+            {% endfor %}
+          </div>
+          <div class="form-group">
+            <label
+              ><span class="glyphicon glyphicon-eye-open"></span>First
+              Name</label
+            >
+            {{form.firstname( id="inputUserame", class="form-control", placeholder=current_user.first_name)}}
+            {% for error in form.firstname.errors %}
+            <li style="color:red;">{{ error }}</li>
+            {% endfor %}
+          </div>
+          <div class="form-group">
+            <label
+              ><span class="glyphicon glyphicon-eye-open"></span> Last
+              Name</label
+            >
+            {{form.lastname( id="inputUserame", class="form-control", placeholder=current_user.last_name)}}
+            {% for error in form.lastname.errors %}
+            <li style="color:red;">{{ error }}</li>
+            {% endfor %}
+          </div>
+          <div class="form-group">
+            <label
+              ><span class="glyphicon glyphicon-eye-open"></span> Email</label
+            >
+            {{form.email( id="inputUserame", class="form-control", placeholder=current_user.email)}}
+            {% for error in form.email.errors %}
+            <li style="color:red;">{{ error }}</li>
+            {% endfor %}
+          </div>
+          <div class="form-group">
+            <label
+              ><span class="glyphicon glyphicon-eye-open"></span> Change
+              Picture</label
+            >
+            {{form.picture(class='form-control-file')}}
+            {% for error in form.picture.errors %}
+            <li style="color:red;">{{ error }}</li>
+            {% endfor %}
+          </div>
+          <hr />
+          {{form.submit( class="btn btn-lg btn-secondary bg-dark btn-block text-uppercase")}}
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="submit"
+          class="btn btn-danger btn-default"
+          data-dismiss="modal"
+        >
+          <span class="glyphicon glyphicon-remove"></span> Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $("#myBtn").click(function() {
+        $("#myModal").modal();
+      });
+    });
+  </script>
+  <script>
+        var formErrors = {% if form.errors %}true{% else %}false{% endif %};
+
+    $(document).ready(function() {
+        if (formErrors) {
+            $('#myModal').modal('show');
+        }
+    });
+  </script>
+</div>
+
+{% endblock %}

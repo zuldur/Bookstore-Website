@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron">
+  <h1>Here is a list of all available puppies.</h1>
+  <ul>
+    {% for wish in wishlist  %}
+    <div class="card-body">
+    <h5 class="card-title"></h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{wish.title}} </h6>
+    <p class="card-text">Whatever is in here is not in your cart yet</p>
+        <a href="{{ url_for('Wishlist_posts.create_post')}}" class="card-link">Create new wishlist</a>
+    <a href="{{ url_for('Wishlist_posts.delete', wishlist_post_id=wish.id) }}" class="card-link">Delete</a>
+  
+</div>
+    {% endfor %}
+  </ul>
+
+</div>
+{% endblock %}

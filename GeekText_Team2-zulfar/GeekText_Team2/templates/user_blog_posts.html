@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <div class="jumbotron">
+    <div align='center'>
+      <h1 >Welcome to the page for {{user.username}}</h1>
+      <img align='center' src="{{ url_for('static', filename='profile_pics/' + user.profile_image) }}">
+    </div>
+  </div>
+
+<!--  Python script-->
+{% for post in blog_posts.items %}  <!-- Notice we use .item to iterate through each item  -->
+
+          <h2><a href="{{ url_for('blog_posts.blog_post', blog_post_id=post.id) }}">{{ post.title }}</a></h2>
+          Written by: <a href="{{ url_for('users.user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
+          <p class="text-muted">Published on: {{ post.date.strftime('%Y-%m-%d') }}</p>    <!-- Publication date -->
+          <br>
+            <p>{{post.text}}</p>      <!-- Text of the actual post -->
+          <br>
+
+{% endfor %}    <!-- Syntax to end a conditional in flask Python  -->
+
+
+</div>
+
+<nav aria-label="Page navigation example">          <!-- Copy paste from bootstrap  -->
+  <ul class="pagination justify-content-center">    <!--  View for multiple pages(due to many blog post) -->
+    {# http://flask.pocoo.org/snippets/44/ #}
+
+<!-- Python script  to select between different pages of the blog post(if many)-->
+    {% for page_num in blog_posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %} <!-- Parameters used to select how many pages appear thatc can be clicked on, without clicking next or previous -->
+            {% if blog_posts.page == page_num %}   <!-- Am I currently in the page for this blog post  -->
+              <li class="page-item disabled"> <!-- Disable because they can only click next or right, not the same page -->
+                <a class="page-link" href="{{ url_for('users.user_posts', username=user.username, page=page_num) }}">{{ page_num }}</a>
+              </li>
+            {% else %}
+              <li class="page-item"><a class="page-link" href="{{ url_for('users.user_posts', username=user.username, page=page_num) }}">{{ page_num }}</a></li>
+            {% endif %}
+    {% endfor %}
+</nav>
+{% endblock content %}
